@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Web test suite" verbose="1" parallel="methods" thread-count="2">
+    <test name="Parallel Tests">
+        <groups>
+        </groups>
+        <packages>
+            <package name="WebTesting"></package>
+        </packages>
+    </test>
+</suite>
+
+<!-- path: C:\Users\Gabriela\Desktop\SkilloProject_DV\target\surefire-reports-->
