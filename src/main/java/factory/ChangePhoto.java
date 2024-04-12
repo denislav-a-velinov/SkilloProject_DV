@@ -1,5 +1,4 @@
 package factory;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,9 +20,7 @@ public class ChangePhoto {
         PageFactory.initElements(webDriver, this);
     }
     public void uploadProfilePhoto(File file){
-        ////*[@class='form-group']//div/input[@type='file'] - hidden
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(15));
-//        uploadFile.click();
         uploadFile.sendKeys(file.getAbsolutePath());
     }
 }

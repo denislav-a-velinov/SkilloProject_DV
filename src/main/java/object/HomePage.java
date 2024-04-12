@@ -1,5 +1,4 @@
 package object;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,7 +15,6 @@ public class HomePage {
     public void navigateTo(){
         this.webDriver.get(HOME_URL);
     }
-
     public boolean isUrlLoaded(){
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(15));
         return wait.until(ExpectedConditions.urlToBe(HOME_URL));

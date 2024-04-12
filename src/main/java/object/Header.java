@@ -7,13 +7,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-
 public class Header {
     private final WebDriver webDriver;
     public Header (WebDriver driver){
         this.webDriver = driver;
     }
-
     public void clickLogin(){
         WebElement loginLink = webDriver.findElement(By.id("nav-link-login"));
         loginLink.click();

@@ -1,27 +1,16 @@
 package WebTesting;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import object.*;
-//import factory.*;
+
+//import object.*;
+import factory.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 
-
-public class LikeDislikeLatestPost extends TestObject2{
-    // Below we can choose which WebBrowser to use for the test (currently using Chrome):
-    ChromeDriver webDriver;
-    //FirefoxDriver webDriver;
-    //EdgeDriver webDriver;
-    //SafariDriver webDriver;
-    private final boolean userReg = false;
+public class LikeDislikeLatestPost extends TestObject {
     @DataProvider(name="getUser")
     public Object[][] getUsers(){
         return new Object[][]{
@@ -29,39 +18,24 @@ public class LikeDislikeLatestPost extends TestObject2{
         };
     }
     @Test(dataProvider = "getUser")
-    public void likeDislikeLatestPostTest(String username, String password, String userId){
+    public void likeDislikeLatestPostTest(String username, String password, String userId) throws InterruptedException {
         WebDriver webDriver = super.getWebDriver();
         Header header = new Header(webDriver);
         HomePage homePage = new HomePage(webDriver);
         LoginPage loginPage = new LoginPage(webDriver);
         ProfilePage profilePage = new ProfilePage(webDriver);
 
-        homePage.navigateTo();
-        Assert.assertTrue(homePage.isUrlLoaded(), "Current page is not the Home page.");
+        loginPage.navigateTo();
+        Assert.assertTrue(loginPage.isUrlLoaded(), "Current page is not Login");
 
-        header.clickLogin();
-        Assert.assertTrue(loginPage.isUrlLoaded(), "Current page is not the Login page.");
+        loginPage.completeSignIn(username, password);
 
-        loginPage.fillInUserName(username);
-        loginPage.fillInPassword(password);
-
-        loginPage.checkRememberMe();
-        Assert.assertTrue(loginPage.isCheckedRememberMe(), "Remember me checkbox is checked.");
-
-        // THE BELOW IS FOR POM:
-        loginPage.clickSignInButton();
-        //THE BELOW ONE IS FOR FACTORY:
-//        loginPage.clickSignIn();
+        // The usage of the below wait is not a good practice:
+        Thread.sleep(3000);
 
         header.clickProfile();
-        Assert.assertTrue(profilePage.isUrlLoaded(), "Current page is not the Profile page.");
+        Assert.assertTrue(profilePage.isUrlLoaded(userId), "Current page is not profile page" + userId + "user");
 
-        WebElement profilePageLink = webDriver.findElement(By.id("nav-link-profile"));
-        profilePageLink.click();
-
-        String profileURL = ProfilePage.PAGE_URL+userId;
-
-        webDriver.get(profileURL);
         //Previously used locator: /html/body/app-root/div[2]/app-profile/div/div[2]/app-profile-posts-section/div/div[2]/div/app-post-list/div/div/app-post[1]
         WebElement latestPost = webDriver.findElement(By.xpath("//app-post[1]"));
 
@@ -89,13 +63,6 @@ public class LikeDislikeLatestPost extends TestObject2{
             System.out.println(actualMessage);
         } else {
             System.out.println(expectedDislikeMessage);
-        }
-
-    }
-    @AfterMethod(alwaysRun = true)
-    public void afterTest(){
-        if (webDriver != null) {
-            webDriver.close();
         }
     }
 }

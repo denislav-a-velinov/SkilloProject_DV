@@ -13,7 +13,7 @@ public class ProfilePage {
     private final WebDriver webDriver;
     public ProfilePage(WebDriver driver){
         this.webDriver = driver;
-        //PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver, this);
     }
     public boolean isUrlLoaded(){
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(15));

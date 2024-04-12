@@ -1,5 +1,4 @@
 package factory;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,11 +27,6 @@ public class Header {
     public void clickNewPost(){
         newPostLink.click();
     }
-    /*
-    public boolean isEnabledLoginLink(){
-        return loginLink.isEnabled();
-    }
-    */
     public  void clickProfile(){
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.elementToBeClickable(profilePageLink));

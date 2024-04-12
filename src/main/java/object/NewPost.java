@@ -1,5 +1,4 @@
 package object;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,29 +23,23 @@ public class NewPost {
     public NewPost(WebDriver driver) {
         this.webDriver = driver;
     }
-
     public boolean isNewPostPageLoaded() {
         return webDriver.findElement(newPostTitleLocator).isDisplayed();
     }
-
     public boolean isImageUploaded(String fileName) {
         String actualText = webDriver.findElement(uploadPictureTextLocator).getAttribute("placeholder");
         return actualText.equals(fileName);
     }
-
     public void uploadPicture(File file) {
         WebElement uploadFile = webDriver.findElement(By.xpath("//*[@class='form-group']/input[@type='file']"));
         uploadFile.sendKeys(file.getAbsolutePath());
     }
-
     public String getUploadedImageText() {
         return webDriver.findElement(uploadPictureTextLocator).getAttribute("placeholder");
     }
-
     public void typePostCaption(String text) {
         webDriver.findElement(postCaptionLocator).sendKeys(text);
     }
-
     public void clickCreatePost() {
         webDriver.findElement(createPostButtonLocator).click();
     }

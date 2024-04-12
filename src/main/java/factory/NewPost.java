@@ -1,5 +1,4 @@
 package factory;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,16 +17,14 @@ public class NewPost {
     private WebElement postCaption;
     @FindBy(id = "create-post")
     private WebElement createPostButton;
+
     public NewPost(WebDriver driver){
         this.webDriver = driver;
         PageFactory.initElements(webDriver, this);
     }
-
     public boolean isNewPostLoaded(){
         return newPostTitle.isDisplayed();
     }
-
-
     public boolean isImageUploaded(String fileName) {
         String actualText = uploadPictureText.getAttribute("placeholder");
         if (actualText.equals(fileName)){
@@ -35,7 +32,6 @@ public class NewPost {
         }
         return false;
     }
-
     public void uploadPicture(File file){
         ////*[@class='form-group']//div/input[@type='file'] - hidden
         WebElement uploadFile = webDriver.findElement(By.xpath("//*[@class='form-group']/input[@type='file']"));
@@ -44,11 +40,9 @@ public class NewPost {
     public String getUploadedImageText() {
         return uploadPictureText.getAttribute("placeholder");
     }
-
     public void typePostCaption(String text){
         postCaption.sendKeys(text);
     }
-
     public void clickCreatePost() {
         //create validation with createPostButton.isEnabled();
         createPostButton.click();

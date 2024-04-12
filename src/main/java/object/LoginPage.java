@@ -18,31 +18,26 @@ public class LoginPage {
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(15));
         return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
     }
-
     public void fillInUserName(String username){
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(15));
         WebElement usernameTextField = wait.until(ExpectedConditions.visibilityOf(webDriver.findElement(By.id("defaultLoginFormUsername"))));
         usernameTextField.sendKeys(username);
     }
-
     public void fillInPassword(String password){
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(15));
         WebElement usernameTextField = wait.until(ExpectedConditions.visibilityOf(webDriver.findElement(By.xpath("//form/input[@id='defaultLoginFormPassword']"))));
         usernameTextField.sendKeys(password);
     }
-
     public void checkRememberMe(){
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(15));
         WebElement rememberMeCheckbox = webDriver.findElement(By.xpath("//*[@class='remember-me']/input[@type='checkbox']"));
         wait.until(ExpectedConditions.elementToBeClickable(rememberMeCheckbox));
         rememberMeCheckbox.click();
     }
-
     public boolean isCheckedRememberMe(){
         WebElement rememberMeCheckbox = webDriver.findElement(By.xpath("//*[@class='remember-me']/input[@type='checkbox']"));
         return rememberMeCheckbox.isSelected();
     }
-
     public void clickSignInButton(){
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(15));
         WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(webDriver.findElement(By.id("sign-in-button"))));
@@ -51,12 +46,10 @@ public class LoginPage {
     public void navigateTo() {
         this.webDriver.get(PAGE_URL);
     }
-
-    public void completeSingIn(String username, String password){
+    public void completeSignIn(String username, String password){
         fillInUserName(username);
         fillInPassword(password);
         checkRememberMe();
         clickSignInButton();
     }
-
 }
