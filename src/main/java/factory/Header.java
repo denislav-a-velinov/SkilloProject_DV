@@ -5,7 +5,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 public class Header {
@@ -16,6 +15,8 @@ public class Header {
     private WebElement profilePageLink;
     @FindBy(id = "nav-link-new-post")
     private WebElement newPostLink;
+    @FindBy(xpath = "//*[@id='navbarColor01']/ul[2]/li")
+    private WebElement LogOutButton;
 
     public Header(WebDriver driver){
         this.webDriver = driver;
@@ -23,6 +24,9 @@ public class Header {
     }
     public void clickLogin(){
         loginLink.click();
+    }
+    public void clickLogOut(){
+        LogOutButton.click();
     }
     public void clickNewPost(){
         newPostLink.click();

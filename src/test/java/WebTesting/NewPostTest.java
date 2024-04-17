@@ -1,11 +1,7 @@
 package WebTesting;
 
-//import object.*;
 import factory.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -15,47 +11,43 @@ public class NewPostTest extends TestObject {
     @DataProvider(name = "getUser")
     public Object[][] getUsers() {
         File postPic = new File("src//test//resources//upload//testimage.jpg");
-        String caption = "This is the new test image to test the submit post option.";
+        String caption = "This is a test post with a test file.";
         return new Object[][]{
-
                 {"dvelinov1", "dvelinov1pass", "5627", postPic, caption}
         };
     }
     @Test(dataProvider = "getUser")
-    public void testCreatePost(String username, String password, String userId, File postPic, String caption) throws InterruptedException {
+    public void testCreatePost(String username, String password, String userId, File postPic, String caption){
         WebDriver webDriver = super.getWebDriver();
         Header header = new Header(webDriver);
-        HomePage homePage = new HomePage(webDriver);
         LoginPage loginPage = new LoginPage(webDriver);
-        NewPost newPost = new NewPost(webDriver);
         ProfilePage profilePage = new ProfilePage(webDriver);
+        NewPost newPost = new NewPost(webDriver);
 
         loginPage.navigateTo();
-        Assert.assertTrue(loginPage.isUrlLoaded(), "Current page is not Login");
+        Assert.assertTrue(loginPage.isUrlLoaded(), "Current page is not the Login page.");
 
         loginPage.completeSignIn(username, password);
 
-        // The usage of the below wait is not a good practice:
-        Thread.sleep(3000);
+        header.clickProfile();
+        Assert.assertTrue(profilePage.isUrlLoaded(userId),"The current page is not the profile page for "+ userId + "user.");
 
         header.clickNewPost();
+        Assert.assertTrue(newPost.isNewPostLoaded(),"The New Post form is not loaded.");
 
         newPost.uploadPicture(postPic);
         String actualImageText = newPost.getUploadedImageText();
-        Assert.assertTrue(newPost.isImageUploaded("testimage.jpg"),"Image is not uploaded successfully.");
-        Assert.assertEquals(actualImageText, "testimage.jpg", "Incorrect image is uploaded.");
+        Assert.assertTrue(newPost.isImageUploaded("testimage.jpg"),"The image is not uploaded successfully.");
+        Assert.assertEquals(actualImageText, "testimage.jpg", "The image uploaded is incorrect.");
 
         newPost.typePostCaption(caption);
         newPost.clickCreatePost();
+        Assert.assertTrue(profilePage.isUrlLoaded(), "The current page is not the profile page.");
 
-        WebElement createNewPostMessageBox = webDriver.findElement(By.xpath("//*[@id='toast-container']//*[@class='toast-message ng-star-inserted']"));
-        Actions newPostMessageBox = new Actions(webDriver);
-        newPostMessageBox.moveToElement(createNewPostMessageBox).perform();
+        loginPage.checkLoginMessage();
+        Assert.assertTrue(loginPage.isLoginMessageDisplayed(), "The New Post message is not displayed.");
 
-        String actualDeleteMessage = createNewPostMessageBox.getText();
-
-        if (actualDeleteMessage.equals("Post created!")) {
-            System.out.println(createNewPostMessageBox.getText());
+        String message = loginPage.BoxMessageAction.getText();
+        System.out.println(message);
         }
     }
-}

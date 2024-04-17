@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import java.io.File;
 
 public class NewPost {
@@ -17,6 +16,8 @@ public class NewPost {
     private WebElement postCaption;
     @FindBy(id = "create-post")
     private WebElement createPostButton;
+    @FindBy(xpath = "//*[@id='toast-container']//*[@class='toast-message ng-star-inserted']")
+    private WebElement loginBoxMessage;
 
     public NewPost(WebDriver driver){
         this.webDriver = driver;
@@ -33,7 +34,6 @@ public class NewPost {
         return false;
     }
     public void uploadPicture(File file){
-        ////*[@class='form-group']//div/input[@type='file'] - hidden
         WebElement uploadFile = webDriver.findElement(By.xpath("//*[@class='form-group']/input[@type='file']"));
         uploadFile.sendKeys(file.getAbsolutePath());
     }
@@ -44,7 +44,6 @@ public class NewPost {
         postCaption.sendKeys(text);
     }
     public void clickCreatePost() {
-        //create validation with createPostButton.isEnabled();
         createPostButton.click();
     }
 }

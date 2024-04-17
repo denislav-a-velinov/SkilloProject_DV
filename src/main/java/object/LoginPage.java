@@ -3,9 +3,9 @@ package object;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 public class LoginPage {
@@ -51,5 +51,19 @@ public class LoginPage {
         fillInPassword(password);
         checkRememberMe();
         clickSignInButton();
+    }
+    public  String checkLoginMessage() {
+        WebElement loginBoxMessage = webDriver.findElement(By.xpath("//*[@id='toast-container']//*[@class='toast-message ng-star-inserted']"));
+        Actions loginMessageBox = new Actions(webDriver);
+        loginMessageBox.moveToElement(loginBoxMessage).perform();
+        return loginBoxMessage.getText();
+    }
+    public boolean isLoginMessageDisplayed() {
+        try {
+            WebElement loginBoxMessage = webDriver.findElement(By.xpath("//*[@id='toast-container']//*[@class='toast-message ng-star-inserted']"));
+            return loginBoxMessage.isDisplayed();
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
     }
 }
